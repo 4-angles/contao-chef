@@ -1,0 +1,37 @@
+{
+    "name": "4-angles/contao-chef",
+    "description": "Restourant Menus Extension for Contao 5+",
+    "license": "LGPL-3.0-or-later",
+    "type": "contao-bundle",
+    "authors": [
+        {
+            "name": "Miroslav Horvatov",
+            "homepage": "https://github.com/4-angles"
+        }
+    ],
+    "homepage": "https://four-angles.com",
+    "support": {
+        "issues": "https://github.com/4-angles"
+    },
+    "require": {
+        "php": "^8.1",
+        "contao/core-bundle": "^5.0"
+    },
+    "extra": {
+        "contao-manager-plugin": "FourAngles\\ChefBundle\\ContaoManager\\Plugin"
+    },
+    "autoload": {
+        "psr-4": {
+            "FourAngles\\ChefBundle\\": "src/"
+        },
+        "classmap": [
+            "contao/"
+        ],
+        "exclude-from-classmap": [
+            "contao/config/",
+            "contao/dca/",
+            "contao/languages/",
+            "contao/templates/"
+        ]
+    }
+}
