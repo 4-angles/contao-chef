@@ -16,11 +16,11 @@ use FourAngles\ChefBundle\MealsCategoryModel;
 // Add back end modules
 $GLOBALS['BE_MOD']['contao_chef']['category'] = array
 (
-	'tables' => array('tl_cc_meals_category')
+	'tables' => array('tl_cc_meals_category','tl_cc_meals_category_lng')
 );
 $GLOBALS['BE_MOD']['contao_chef']['meals'] = array
 (
-	'tables' => array('tl_cc_meals')
+	'tables' => array('tl_cc_meals','tl_cc_meals_lng')
 );
 
 

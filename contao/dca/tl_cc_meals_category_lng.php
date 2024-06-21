@@ -17,19 +17,17 @@ use Contao\StringUtil;
 use Contao\System;
 use Contao\PageModel;
 
-$GLOBALS['TL_DCA']['tl_cc_meals_lng'] = array
+$GLOBALS['TL_DCA']['tl_cc_meals_category_lng'] = array
 (
 	// Config
 	'config' => array
 	(
 		'dataContainer'               => DC_Table::class,
-		'switchToEdit'                => true,
-		'ptable'                      => 'tl_cc_meals',
-		'enableVersioning'            => true,
 		'markAsCopy'                  => 'title',
+		'ptable'                      => 'tl_cc_meals_category',
 		'onload_callback' => array
 		(
-			array('tl_cc_meals_lng', 'adjustDca')
+			array('tl_cc_meals_category_lng', 'adjustDca')
 		),
 		'sql' => array
 		(
@@ -50,12 +48,11 @@ $GLOBALS['TL_DCA']['tl_cc_meals_lng'] = array
 		),
 		'label' => array
 		(
-			'fields'                  => array('id','language','title','ingredients','price'),
+			'fields'                  => array('id','language','title'),
 			'showColumns'			  => true,
-			'label_callback'          => array('tl_cc_meals_lng', 'returnLabel')
-
+			'label_callback'          => array('tl_cc_meals_category_lng', 'returnLabel')
 		),
-		'operations' => array
+        'operations' => array
 		(
 			'edit' => array
 			(
@@ -76,14 +73,12 @@ $GLOBALS['TL_DCA']['tl_cc_meals_lng'] = array
 				'href'                => 'act=show',
 				'icon'                => 'show.gif'
 			),
-		)
-		
 	),
-
+),
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => '{language_legend},language;{title_legend},title;{info_legend},ingredients,price;'
+		'default'                     => '{language_legend},language;{title_legend},title;'
 	),
 
 	// Fields
@@ -105,28 +100,18 @@ $GLOBALS['TL_DCA']['tl_cc_meals_lng'] = array
 		),
 		'title' => array
 		(
+			'search'                  => true,
 			'inputType'               => 'text',
-			'eval'                    => array('mandatory'=>true, 'maxlength'=>255, 'tl_class'=>'w50 clr'),
+			'eval'                    => array('mandatory'=>true, 'maxlength'=>255, 'tl_class'=>'w50'),
 			'sql'                     => "varchar(255) NOT NULL default ''"
-		),
-		'ingredients' => array
-		(
-			'inputType'               => 'text',
-			'eval'                    => array('mandatory'=>true, 'maxlength'=>255, 'tl_class'=>'w50 clr'),
-			'sql'                     => "text NULL"
 		),
 		'language' => array
 		(
+			'filter'                  => true,
 			'inputType'               => 'select',
-			'options_callback'        => array('tl_cc_meals_lng', 'getLanguages'),
+			'options_callback'        => array('tl_cc_meals_category_lng', 'getLanguages'),
 			'eval'                    => array('mandatory'=>true,'submitOnChange'=>true, 'tl_class'=>'w50'),
 			'sql'                     => array('name'=>'language', 'type'=>'string', 'length'=>64, 'default'=>'', 'customSchemaOptions'=>array('collation'=>'ascii_bin'))
-		),
-		'price' => array
-		(
-			'inputType'               => 'text',
-			'eval'                    => array('maxlength'=>255, 'tl_class'=>'w50 clr'),
-			'sql'                     => "varchar(255) NOT NULL default ''"
 		),
 	)
 );
@@ -136,7 +121,7 @@ $GLOBALS['TL_DCA']['tl_cc_meals_lng'] = array
  *
  * @internal
  */
-class tl_cc_meals_lng extends Backend
+class tl_cc_meals_category_lng extends Backend
 {
 	/**
 	 * Set the root IDs.
@@ -160,10 +145,10 @@ class tl_cc_meals_lng extends Backend
 			$root = $user->faqs;
 		}
 
-		$GLOBALS['TL_DCA']['tl_cc_meals_lng']['list']['sorting']['root'] = $root;
+		$GLOBALS['TL_DCA']['tl_cc_meals_category_lng']['list']['sorting']['root'] = $root;
 	}
 
-	/**
+		/**
 	 * Return all languages as array
 	 *
 	 * @return array
@@ -200,5 +185,4 @@ class tl_cc_meals_lng extends Backend
 		return $labels ;
 
 	}
-
 }

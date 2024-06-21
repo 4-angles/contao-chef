@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.1">
+  <file datatype="php" original="contao/languages/en/tl_cc_meals_category_lng.php" source-language="en">
+    <body>
+
+      <trans-unit id="tl_cc_meals_category_lng.delete">
+        <source>Delete category</source>
+      </trans-unit>
+      <trans-unit id="tl_cc_meals_category_lng.edit">
+        <source>Edit category</source>
+      </trans-unit>
+      <trans-unit id="tl_cc_meals_category_lng.show">
+        <source>Info about category</source>
+      </trans-unit>
+
+      <trans-unit id="tl_cc_meals_category_lng.language_legend">
+        <source>Language</source>
+      </trans-unit>
+      <trans-unit id="tl_cc_meals_category_lng.title_legend">
+        <source>Title Legend</source>
+      </trans-unit>
+      
+      <trans-unit id="tl_cc_meals_category_lng.id.0">
+        <source>ID</source>
+      </trans-unit>
+      <trans-unit id="tl_cc_meals_category_lng.title.0">
+        <source>Title</source>
+      </trans-unit>
+      <trans-unit id="tl_cc_meals_category_lng.language.0">
+        <source>Language</source>
+      </trans-unit>
+
+
+
+    </body>
+  </file>
+</xliff>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.1">
+  <file datatype="php" original="contao/languages/en/tl_cc_meals.php" source-language="en">
+    <body>
+
+      <trans-unit id="tl_cc_meals.title.0">
+        <source>Title</source>
+      </trans-unit>
+      <trans-unit id="tl_cc_meals.id.0">
+        <source>ID</source>
+      </trans-unit>
+      <trans-unit id="tl_cc_meals.ingredients.0">
+        <source>Ingredients</source>
+      </trans-unit>
+      <trans-unit id="tl_cc_meals.price.0">
+        <source>Price</source>
+      </trans-unit>
+      <trans-unit id="tl_cc_meals.category.0">
+        <source>Category</source>
+      </trans-unit>
+      <trans-unit id="tl_cc_meals.category_legend">
+        <source>Language</source>
+      </trans-unit>
+      <trans-unit id="tl_cc_meals.title_legend">
+        <source>Title</source>
+      </trans-unit>
+      <trans-unit id="tl_cc_meals.info_legend">
+        <source>Info</source>
+      </trans-unit>
+
+
+
+      <trans-unit id="tl_cc_meals.delete">
+        <source>Delete meal</source>
+      </trans-unit>
+      <trans-unit id="tl_cc_meals.edit">
+        <source>Edit meal</source>
+      </trans-unit>
+      <trans-unit id="tl_cc_meals.meals_lng">
+        <source>Add language specific data if needed</source>
+      </trans-unit>
+      <trans-unit id="tl_cc_meals.show">
+        <source>Info about meal</source>
+      </trans-unit>
+
+
+
+    </body>
+  </file>
+</xliff>
