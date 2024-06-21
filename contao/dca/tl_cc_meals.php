@@ -62,19 +62,14 @@ $GLOBALS['TL_DCA']['tl_cc_meals'] = array
 				'href'                => 'act=edit',
 				'icon'                => 'edit.gif'
 			),
+			'copy',
             'meals_lng' => array
 			(
 				'icon'                => 'bundles/contaochef/icons/languages.svg',
 				'label'               => &$GLOBALS['TL_LANG']['tl_cc_meals']['meals_lng'],
 				'href'                => 'table=tl_cc_meals_lng',
 			),
-			'delete' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_cc_meals']['delete'],
-				'href'                => 'act=delete',
-				'icon'                => 'delete.gif',
-				'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"'
-			),
+			'delete',
 			'show' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_cc_meals']['show'],

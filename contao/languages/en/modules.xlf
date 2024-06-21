@@ -14,6 +14,13 @@
       <trans-unit id="MOD.menus.0">
         <source>Menus</source>
       </trans-unit>
+
+      <trans-unit id="FMD.cc_menu_categories.0">
+        <source>Menu by Categories</source>
+      </trans-unit>
+      <trans-unit id="FMD.cc_menu_meals.0">
+        <source>Menu by Meals</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

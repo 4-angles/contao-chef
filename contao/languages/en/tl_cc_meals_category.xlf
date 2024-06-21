@@ -15,6 +15,10 @@
       <trans-unit id="tl_cc_meals_category.show">
         <source>Info about category</source>
       </trans-unit>
+
+      <trans-unit id="tl_cc_meals_category.deleteConfirm">
+        <source>Confirm</source>
+      </trans-unit>
       
       <trans-unit id="tl_cc_meals_category.id.0">
         <source>ID</source>

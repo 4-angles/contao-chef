@@ -1,0 +1,20 @@
+<<?= $this->hl ?>><?= $this->headline ?></<?= $this->hl ?>>
+
+<?php $this->extend('block_searchable'); ?>
+
+<?php $this->block('content'); ?>
+
+  <?php foreach ($this->menu as $category => $meals): ?>
+    <div class="meals">
+    <h2 class="category_headline"><?= $category ?></h2>
+      <?php foreach ($meals as $m): ?>
+        <div class="single_meal">
+            <p><?= $m['title'] ?></p>
+            <p><?= $m['ingredients'] ?></p>
+            <p><?= $m['price'] ?></p>
+        </div>
+      <?php endforeach; ?>
+    </div>
+  <?php endforeach; ?>
+
+<?php $this->endblock(); ?>

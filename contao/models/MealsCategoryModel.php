@@ -8,12 +8,13 @@
  * @license LGPL-3.0-or-later
  */
 
-namespace FourAngles\ChefBundle;
+namespace FourAngles\ChefBundle\Models;
 
 use Contao\Model\Collection;
+use Contao\Model;
 
 /**
- * Reads and writes FAQ categories
+ * Reads and writes categories
  *
  * @property integer $id
  * @property integer $tstamp
@@ -83,4 +84,5 @@ class MealsCategoryModel extends Model
 	 * @var string
 	 */
 	protected static $strTable = 'tl_cc_meals_category';
+
 }

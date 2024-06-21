@@ -64,19 +64,7 @@ $GLOBALS['TL_DCA']['tl_cc_meals_category'] = array
 				'label'               => &$GLOBALS['TL_LANG']['tl_cc_meals_category']['category_lng'],
 				'href'                => 'table=tl_cc_meals_category_lng',
 			),
-			'delete' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_cc_meals_category']['delete'],
-				'href'                => 'act=delete',
-				'icon'                => 'delete.gif',
-				'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"'
-			),
-			'show' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_cc_meals_category']['show'],
-				'href'                => 'act=show',
-				'icon'                => 'show.gif'
-			),
+			'delete'
 	),
 ),
 	// Palettes
