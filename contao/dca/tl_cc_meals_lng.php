@@ -16,6 +16,8 @@ use Contao\DC_Table;
 use Contao\StringUtil;
 use Contao\System;
 use Contao\PageModel;
+use FourAngles\ChefBundle\Models\MealsLanguageModel;
+use FourAngles\ChefBundle\Models\MealsModel;
 
 $GLOBALS['TL_DCA']['tl_cc_meals_lng'] = array
 (
@@ -61,7 +63,7 @@ $GLOBALS['TL_DCA']['tl_cc_meals_lng'] = array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_cc_meals_category_lng']['edit'],
 				'href'                => 'act=edit',
-				'icon'                => 'edit.gif'
+				'icon'                => 'edit.gif',
 			),
 			'delete',
 			'show' => array
@@ -174,11 +176,11 @@ class tl_cc_meals_lng extends Backend
 				$rootPagesLanguages[] = $root->language;
 			}
 
-
 			return $rootPagesLanguages;
 
 
 	}
+
 
 	/**
 	 * Return label
