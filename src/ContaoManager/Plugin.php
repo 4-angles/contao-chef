@@ -3,12 +3,14 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Contao.
+ * This file is part of Contao Chef Bundle.
  *
- * (c) Leo Feyer
+ * (c) Miroslav Horvatov - Four Angles
+ * Website: four-angles.com
  *
  * @license LGPL-3.0-or-later
  */
+
 
 namespace FourAngles\ChefBundle\ContaoManager;
 
