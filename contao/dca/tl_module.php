@@ -37,6 +37,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['meals_picker'] = array
     'options_callback'        => array('tl_module_cc', 'getMeals'),
     'eval' => [
         'multiple' => true,
+        'mandatory' =>true,
     ],
     'sql' => [
         'type' => 'blob',
@@ -59,6 +60,7 @@ class tl_module_cc extends Backend
 
         $meals = MealsModel::findAll();
         $mealsTitles = [] ;
+
         foreach($meals as $m){
 
             $title = $m->title;
