@@ -23,6 +23,7 @@ $GLOBALS['TL_DCA']['tl_cc_meals'] = array
 	(
 		'dataContainer'               => DC_Table::class,
 		'switchToEdit'                => true,
+		'ptable'                      => 'tl_cc_meals_category',
 		'ctable'                      => array('tl_cc_meals_lng'),
 		'enableVersioning'            => true,
 		'markAsCopy'                  => 'title',
@@ -51,7 +52,7 @@ $GLOBALS['TL_DCA']['tl_cc_meals'] = array
 		),
 		'label' => array
 		(
-			'fields'                  => array('id','title','category','ingredients','price'),
+			'fields'                  => array('id','title','ingredients','price'),
 			'showColumns'			  => true,
 		),
 		'operations' => array
@@ -82,7 +83,7 @@ $GLOBALS['TL_DCA']['tl_cc_meals'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => '{title_legend},title;{category_legend},category;{info_legend},ingredients,price;'
+		'default'                     => '{title_legend},title;{info_legend},ingredients,price;'
 	),
 
 	// Fields
@@ -91,6 +92,12 @@ $GLOBALS['TL_DCA']['tl_cc_meals'] = array
 		'id' => array
 		(
 			'sql'                     => "int(10) unsigned NOT NULL auto_increment"
+		),
+		'pid' => array
+		(
+			'foreignKey'              => 'tl_cc_meals_category.title',
+			'sql'                     => "int(10) unsigned NOT NULL default 0",
+			'relation'                => array('type'=>'belongsTo', 'load'=>'lazy')
 		),
 		'tstamp' => array
 		(
@@ -102,15 +109,6 @@ $GLOBALS['TL_DCA']['tl_cc_meals'] = array
 			'inputType'               => 'text',
 			'eval'                    => array('mandatory'=>true, 'maxlength'=>255, 'tl_class'=>'w50 clr'),
 			'sql'                     => "varchar(255) NOT NULL default ''"
-		),
-		'category' => array
-		(
-			'filter'                  => true,
-			'search'                  => true,
-			'inputType'               => 'select',
-			'options_callback'        => array('tl_cc_meals', 'getMealCategories'),
-			'eval'                    => array('submitOnChange'=>true, 'tl_class'=>'w50'),
-			'sql'                     => array('name'=>'category', 'type'=>'string', 'length'=>64, 'default'=>'', 'customSchemaOptions'=>array('collation'=>'ascii_bin'))
 		),
 		'ingredients' => array
 		(
@@ -160,24 +158,4 @@ class tl_cc_meals extends Backend
 		$GLOBALS['TL_DCA']['tl_cc_meals']['list']['sorting']['root'] = $root;
 	}
 
-		/**
-	 * Return all content elements as array
-	 *
-	 * @return array
-	 */
-	public function getMealCategories(DataContainer $dc)
-	{
-
-			$groups = Database::getInstance()
-				->prepare("SELECT * FROM tl_cc_meals_category")
-				->execute()->fetchAllAssoc();
-
-			$categories = [];	
-			foreach($groups as $v){
-				$categories[] = $v['title'];
-			}
-
-
-		return $categories;
-	}
 }

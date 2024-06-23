@@ -71,8 +71,6 @@ class ModuleMenuMeals extends Module
 
 
         $this->Template->menu = $meals;
-
-
     }
 
 
@@ -85,12 +83,18 @@ class ModuleMenuMeals extends Module
         $langMeals = [];
         foreach ($meals as $m) {
 
-            $meal = MealsModel::findById($m);
+            $meal = MealsModel::findBy('title', $m);
             $mealLng = MealsLanguageModel::findBy('pid', $meal->id);
 
             if ($mealLng) {
                 foreach ($mealLng as $v) {
                     if ($v->language == $lng) {
+
+                        // Fallback if price is not set in language
+                        if (!$v->price) {
+                            $v->price = $meal->price;
+                        }
+
                         $langMeals[] = [
                             "title" => $v->title,
                             "ingredients" => $v->ingredients,

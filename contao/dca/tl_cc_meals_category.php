@@ -23,7 +23,7 @@ $GLOBALS['TL_DCA']['tl_cc_meals_category'] = array
 	(
 		'dataContainer'               => DC_Table::class,
 		'markAsCopy'                  => 'title',
-		'ctable'                      => array('tl_cc_meals_category_lng'),
+		'ctable'                      => array('tl_cc_meals_category_lng','tl_cc_meals','tl_cc_meals_lng'),
 		'onload_callback' => array
 		(
 			array('tl_cc_meals_category', 'adjustDca')
@@ -57,6 +57,12 @@ $GLOBALS['TL_DCA']['tl_cc_meals_category'] = array
 				'label'               => &$GLOBALS['TL_LANG']['tl_cc_meals_category']['edit'],
 				'href'                => 'act=edit',
 				'icon'                => 'edit.gif'
+			),
+			'meals' => array
+			(
+				'icon'                => 'bundles/contaochef/icons/meal.svg',
+				'label'               => &$GLOBALS['TL_LANG']['tl_cc_meals_category']['category_lng'],
+				'href'                => 'table=tl_cc_meals',
 			),
             'category_lng' => array
 			(

@@ -69,10 +69,11 @@ class ModuleMenuCategories extends Module
 
         $compiledMenu = [];
 
+
         foreach ($selectedCategories as $v) {
             $category = MealsCategoryModel::findById($v);
+            $meals = $this->getTranslatedMeals($category->id, $currentLng);
 
-            $meals = $this->getTranslatedMeals($category->title, $currentLng);
             if ($meals) {
                 if ($this->getTranslatedCategories($category->id, $currentLng)) {
                     $compiledMenu[$this->getTranslatedCategories($category->id, $currentLng)] =  $meals;
@@ -81,9 +82,9 @@ class ModuleMenuCategories extends Module
                 }
             }
         }
+
+
         $this->Template->menu = $compiledMenu;
-
-
     }
 
 
@@ -101,7 +102,7 @@ class ModuleMenuCategories extends Module
                 $langCat[$v->language]  = $v->title;
             }
 
-            if(array_key_exists($lng,$langCat)){
+            if (array_key_exists($lng, $langCat)) {
                 return $langCat[$lng];
             }
         }
@@ -111,32 +112,42 @@ class ModuleMenuCategories extends Module
 
 
     /**
-     * Get language specific info
+     * Get language-specific info
      */
-    protected function getTranslatedMeals($ctitle, $lng)
+    protected function getTranslatedMeals($pid, $lng)
     {
-        $meals = MealsModel::findBy("category", $ctitle);
+        $meals = MealsModel::findBy("pid", $pid);
 
         if (!$meals) {
             return [];
         }
+
         $langMeals = [];
         foreach ($meals as $m) {
-
             $mealsLngObj = MealsLanguageModel::findBy("pid", $m->id);
+            $added = false;
+
             if ($mealsLngObj) {
                 foreach ($mealsLngObj as $val) {
                     if ($val->language == $lng) {
+
+                        // Fallback if price is not set in language
+                        if(!$val->price){
+                            $val->price = $m->price;
+                        }
                         // Language specific
                         $langMeals[] = [
                             "title" => $val->title,
                             "ingredients" => $val->ingredients,
                             "price" => $val->price,
                         ];
+                        $added = true;
+                        break; // Stop further checking once the correct language is found
                     }
                 }
             }
-            else {
+
+            if (!$added) {
                 $langMeals[] = [
                     "title" => $m->title,
                     "ingredients" => $m->ingredients,
