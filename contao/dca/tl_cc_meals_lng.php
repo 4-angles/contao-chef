@@ -9,8 +9,6 @@
  * @license LGPL-3.0-or-later
  */
 
-
-
 use Contao\Backend;
 use Contao\BackendUser;
 use Contao\Database;
@@ -22,24 +20,19 @@ use Contao\PageModel;
 use FourAngles\ChefBundle\Models\MealsLanguageModel;
 use FourAngles\ChefBundle\Models\MealsModel;
 
-$GLOBALS['TL_DCA']['tl_cc_meals_lng'] = array
-(
+$GLOBALS['TL_DCA']['tl_cc_meals_lng'] = array(
 	// Config
-	'config' => array
-	(
+	'config' => array(
 		'dataContainer'               => DC_Table::class,
 		'switchToEdit'                => true,
 		'ptable'                      => 'tl_cc_meals',
 		'enableVersioning'            => true,
 		'markAsCopy'                  => 'title',
-		'onload_callback' => array
-		(
+		'onload_callback' => array(
 			array('tl_cc_meals_lng', 'adjustDca')
 		),
-		'sql' => array
-		(
-			'keys' => array
-			(
+		'sql' => array(
+			'keys' => array(
 				'id' => 'primary',
 				'tstamp' => 'index'
 			)
@@ -47,84 +40,69 @@ $GLOBALS['TL_DCA']['tl_cc_meals_lng'] = array
 	),
 
 	// List
-	'list' => array
-	(
-		'sorting' => array
-		(
+	'list' => array(
+		'sorting' => array(
 			'mode'                    => 0,
 		),
-		'label' => array
-		(
-			'fields'                  => array('id','language','title','ingredients','price'),
+		'label' => array(
+			'fields'                  => array('id', 'language', 'title', 'ingredients', 'price'),
 			'showColumns'			  => true,
 			'label_callback'          => array('tl_cc_meals_lng', 'returnLabel')
 
 		),
-		'operations' => array
-		(
-			'edit' => array
-			(
+		'operations' => array(
+			'edit' => array(
 				'label'               => &$GLOBALS['TL_LANG']['tl_cc_meals_category_lng']['edit'],
 				'href'                => 'act=edit',
 				'icon'                => 'edit.gif',
 			),
 			'delete',
-			'show' => array
-			(
+			'show' => array(
 				'label'               => &$GLOBALS['TL_LANG']['tl_cc_meals']['show'],
 				'href'                => 'act=show',
 				'icon'                => 'show.gif'
 			),
 		)
-		
+
 	),
 
 	// Palettes
-	'palettes' => array
-	(
+	'palettes' => array(
 		'default'                     => '{language_legend},language;{title_legend},title;{info_legend},ingredients,price;'
 	),
 
 	// Fields
-	'fields' => array
-	(
-		'id' => array
-		(
+	'fields' => array(
+		'id' => array(
 			'sql'                     => "int(10) unsigned NOT NULL auto_increment"
 		),
-		'pid' => array
-		(
+		'pid' => array(
 			'foreignKey'              => 'tl_cc_meals.title',
 			'sql'                     => "int(10) unsigned NOT NULL default 0",
-			'relation'                => array('type'=>'belongsTo', 'load'=>'lazy')
+			'relation'                => array('type' => 'belongsTo', 'load' => 'lazy')
 		),
-		'tstamp' => array
-		(
+		'tstamp' => array(
 			'sql'                     => "int(10) unsigned NOT NULL default 0"
 		),
-		'title' => array
-		(
+		'title' => array(
 			'inputType'               => 'text',
-			'eval'                    => array('mandatory'=>true, 'maxlength'=>255, 'tl_class'=>'w50 clr'),
+			'eval'                    => array('mandatory' => true, 'maxlength' => 255, 'tl_class' => 'w50 clr'),
 			'sql'                     => "varchar(255) NOT NULL default ''"
 		),
-		'ingredients' => array
-		(
+		'ingredients' => array(
 			'inputType'               => 'text',
-			'eval'                    => array('mandatory'=>true, 'maxlength'=>255, 'tl_class'=>'w50 clr'),
+			'eval'                    => array('mandatory' => true, 'maxlength' => 255, 'tl_class' => 'w50 clr'),
 			'sql'                     => "text NULL"
 		),
-		'language' => array
-		(
+		'language' => array(
 			'inputType'               => 'select',
 			'options_callback'        => array('tl_cc_meals_lng', 'getLanguages'),
-			'eval'                    => array('mandatory'=>true,'submitOnChange'=>true, 'tl_class'=>'w50'),
-			'sql'                     => array('name'=>'language', 'type'=>'string', 'length'=>64, 'default'=>'', 'customSchemaOptions'=>array('collation'=>'ascii_bin'))
+			'eval'                    => array('mandatory' => true, 'submitOnChange' => true, 'tl_class' => 'w50'),
+			'sql'                     => array('name' => 'language', 'type' => 'string', 'length' => 64, 'default' => '', 'customSchemaOptions' => array('collation' => 'ascii_bin'))
 		),
-		'price' => array
-		(
+		'price' => array(
 			'inputType'               => 'text',
-			'eval'                    => array('maxlength'=>255, 'tl_class'=>'w50 clr'),
+			'eval'                    => array('maxlength' => 255, 'tl_class' => 'w50 clr'),
 			'sql'                     => "varchar(255) NOT NULL default ''"
 		),
 	)
@@ -144,18 +122,14 @@ class tl_cc_meals_lng extends Backend
 	{
 		$user = BackendUser::getInstance();
 
-		if ($user->isAdmin)
-		{
+		if ($user->isAdmin) {
 			return;
 		}
 
 		// Set root IDs
-		if (empty($user->faqs) || !is_array($user->faqs))
-		{
+		if (empty($user->faqs) || !is_array($user->faqs)) {
 			$root = array(0);
-		}
-		else
-		{
+		} else {
 			$root = $user->faqs;
 		}
 
@@ -171,17 +145,15 @@ class tl_cc_meals_lng extends Backend
 	{
 
 
-		    // Get all roots
-			$rootPages = PageModel::findByType("root");
-			$rootPagesLanguages = [] ;
-		
-			foreach($rootPages as $root){
-				$rootPagesLanguages[] = $root->language;
-			}
+		// Get all roots
+		$rootPages = PageModel::findByType("root");
+		$rootPagesLanguages = [];
 
-			return $rootPagesLanguages;
+		foreach ($rootPages as $root) {
+			$rootPagesLanguages[] = $root->language;
+		}
 
-
+		return $rootPagesLanguages;
 	}
 
 
@@ -193,11 +165,9 @@ class tl_cc_meals_lng extends Backend
 	public function returnLabel($row, $label, $dc, array $labels)
 	{
 
-		$language = locale_get_display_language($row['language'],$GLOBALS['TL_LANGUAGE']);
+		$language = locale_get_display_language($row['language'], $GLOBALS['TL_LANGUAGE']);
 		$labels[1] = $language;
-	
-		return $labels ;
 
+		return $labels;
 	}
-
 }

@@ -9,7 +9,6 @@
  * @license LGPL-3.0-or-later
  */
 
-
 namespace FourAngles\ChefBundle\Models;
 
 use Contao\Model\Collection;
@@ -86,5 +85,4 @@ class MealsLanguageModel extends Model
 	 * @var string
 	 */
 	protected static $strTable = 'tl_cc_meals_lng';
-
 }

@@ -66,6 +66,11 @@ class ModuleMenuCategories extends Module
         global $objPage;
 
         $currentLng = $objPage->rootLanguage;
+
+        if (!$this->categories_picker) {
+            return false;
+        }
+
         $selectedCategories = StringUtil::deserialize($this->categories_picker);
 
         $compiledMenu = [];
@@ -133,7 +138,7 @@ class ModuleMenuCategories extends Module
                     if ($val->language == $lng) {
 
                         // Fallback if price is not set in language
-                        if(!$val->price){
+                        if (!$val->price) {
                             $val->price = $m->price;
                         }
                         // Language specific

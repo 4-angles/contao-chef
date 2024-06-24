@@ -17,22 +17,17 @@ use Contao\DC_Table;
 use Contao\StringUtil;
 use Contao\System;
 
-$GLOBALS['TL_DCA']['tl_cc_meals_category'] = array
-(
+$GLOBALS['TL_DCA']['tl_cc_meals_category'] = array(
 	// Config
-	'config' => array
-	(
+	'config' => array(
 		'dataContainer'               => DC_Table::class,
 		'markAsCopy'                  => 'title',
-		'ctable'                      => array('tl_cc_meals_category_lng','tl_cc_meals','tl_cc_meals_lng'),
-		'onload_callback' => array
-		(
+		'ctable'                      => array('tl_cc_meals_category_lng', 'tl_cc_meals', 'tl_cc_meals_lng'),
+		'onload_callback' => array(
 			array('tl_cc_meals_category', 'adjustDca')
 		),
-		'sql' => array
-		(
-			'keys' => array
-			(
+		'sql' => array(
+			'keys' => array(
 				'id' => 'primary',
 				'tstamp' => 'index'
 			)
@@ -40,62 +35,50 @@ $GLOBALS['TL_DCA']['tl_cc_meals_category'] = array
 	),
 
 	// List
-	'list' => array
-	(
-		'sorting' => array
-		(
+	'list' => array(
+		'sorting' => array(
 			'mode'                    => 0,
 		),
-		'label' => array
-		(
-			'fields'                  => array('id','title'),
+		'label' => array(
+			'fields'                  => array('id', 'title'),
 			'showColumns'			  => true,
-        ),
-        'operations' => array
-		(
-			'edit' => array
-			(
+		),
+		'operations' => array(
+			'edit' => array(
 				'label'               => &$GLOBALS['TL_LANG']['tl_cc_meals_category']['edit'],
 				'href'                => 'act=edit',
 				'icon'                => 'edit.gif'
 			),
-			'meals' => array
-			(
+			'meals' => array(
 				'icon'                => 'bundles/contaochef/icons/meal.svg',
 				'label'               => &$GLOBALS['TL_LANG']['tl_cc_meals_category']['category_lng'],
 				'href'                => 'table=tl_cc_meals',
 			),
-            'category_lng' => array
-			(
+			'category_lng' => array(
 				'icon'                => 'bundles/contaochef/icons/languages.svg',
 				'label'               => &$GLOBALS['TL_LANG']['tl_cc_meals_category']['category_lng'],
 				'href'                => 'table=tl_cc_meals_category_lng',
 			),
 			'delete'
+		),
 	),
-),
 	// Palettes
-	'palettes' => array
-	(
+	'palettes' => array(
 		'default'                     => '{title_legend},title;'
 	),
 
 	// Fields
-	'fields' => array
-	(
-		'id' => array
-		(
+	'fields' => array(
+		'id' => array(
 			'sql'                     => "int(10) unsigned NOT NULL auto_increment"
 		),
-		'tstamp' => array
-		(
+		'tstamp' => array(
 			'sql'                     => "int(10) unsigned NOT NULL default 0"
 		),
-		'title' => array
-		(
+		'title' => array(
 			'search'                  => true,
 			'inputType'               => 'text',
-			'eval'                    => array('mandatory'=>true, 'maxlength'=>255, 'tl_class'=>'w50'),
+			'eval'                    => array('mandatory' => true, 'maxlength' => 255, 'tl_class' => 'w50'),
 			'sql'                     => "varchar(255) NOT NULL default ''"
 		)
 	)
@@ -115,22 +98,17 @@ class tl_cc_meals_category extends Backend
 	{
 		$user = BackendUser::getInstance();
 
-		if ($user->isAdmin)
-		{
+		if ($user->isAdmin) {
 			return;
 		}
 
 		// Set root IDs
-		if (empty($user->faqs) || !is_array($user->faqs))
-		{
+		if (empty($user->faqs) || !is_array($user->faqs)) {
 			$root = array(0);
-		}
-		else
-		{
+		} else {
 			$root = $user->faqs;
 		}
 
 		$GLOBALS['TL_DCA']['tl_cc_meals_category']['list']['sorting']['root'] = $root;
 	}
-
 }

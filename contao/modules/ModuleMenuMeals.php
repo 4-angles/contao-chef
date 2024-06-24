@@ -64,8 +64,12 @@ class ModuleMenuMeals extends Module
     {
 
         global $objPage;
-
         $currentLng = $objPage->rootLanguage;
+
+        if (!$this->meals_picker) {
+            return false;
+        }
+
         $selectedMeals = StringUtil::deserialize($this->meals_picker);
 
         $meals = $this->getTranslatedMeals($selectedMeals, $currentLng);

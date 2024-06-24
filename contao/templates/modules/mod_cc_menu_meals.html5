@@ -4,11 +4,11 @@
 
 <?php $this->block('content'); ?>
 <div class="meals">
-  <?php foreach ($this->menu as $m): ?>
+  <?php foreach ($this->menu as $m) : ?>
     <div class="single_meal">
-        <p><?= $m['title'] ?></p>
-        <p><?= $m['ingredients'] ?></p>
-        <p><?= $m['price'] ?></p>
+      <p><?= $m['title'] ?></p>
+      <p><?= $m['ingredients'] ?></p>
+      <p><?= $m['price'] ?></p>
     </div>
   <?php endforeach; ?>
 </div>

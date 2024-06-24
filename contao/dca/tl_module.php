@@ -11,8 +11,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['cc_menu_meals']   = '{title_legend}
 
 
 // Add fields to tl_module
-$GLOBALS['TL_DCA']['tl_module']['fields']['categories_picker'] = array
-(
+$GLOBALS['TL_DCA']['tl_module']['fields']['categories_picker'] = array(
     'inputType' => 'picker',
     'eval' => [
         'multiple' => true,
@@ -31,13 +30,12 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['categories_picker'] = array
 
 
 // Add fields to tl_module
-$GLOBALS['TL_DCA']['tl_module']['fields']['meals_picker'] = array
-(
+$GLOBALS['TL_DCA']['tl_module']['fields']['meals_picker'] = array(
     'inputType' => 'checkboxWizard',
     'options_callback'        => array('tl_module_cc', 'getMeals'),
     'eval' => [
         'multiple' => true,
-        'mandatory' =>true,
+        'mandatory' => true,
     ],
     'sql' => [
         'type' => 'blob',
@@ -52,16 +50,16 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['meals_picker'] = array
  */
 class tl_module_cc extends Backend
 {
-	/**
-	 * Get all meals
-	 */
-	public function getMeals()
-	{
+    /**
+     * Get all meals
+     */
+    public function getMeals()
+    {
 
         $meals = MealsModel::findAll();
-        $mealsTitles = [] ;
+        $mealsTitles = [];
 
-        foreach($meals as $m){
+        foreach ($meals as $m) {
 
             $title = $m->title;
 
@@ -70,7 +68,5 @@ class tl_module_cc extends Backend
 
 
         return $mealsTitles;
-		
-	}
-
+    }
 }

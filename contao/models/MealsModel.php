@@ -85,5 +85,4 @@ class MealsModel extends Model
 	 * @var string
 	 */
 	protected static $strTable = 'tl_cc_meals';
-
 }
