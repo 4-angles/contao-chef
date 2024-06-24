@@ -13,9 +13,10 @@ namespace FourAngles\ChefBundle\Models;
 
 use Contao\Model\Collection;
 use Contao\Model;
+use FourAngles\ChefBundle\Models\MealsLanguageModel;
 
 /**
- * Reads and writes categories
+ * Reads and writes meals
  *
  * @property integer $id
  * @property integer $tstamp
@@ -85,4 +86,75 @@ class MealsModel extends Model
 	 * @var string
 	 */
 	protected static $strTable = 'tl_cc_meals';
+
+
+	/**
+	 * Get language-specific meal information
+	 *
+	 * @param array  $meals       The list of meals to be translated
+	 * @param string $language    The target language
+	 * @param int    $noIngredients Flag to determine whether to remove ingredients (1 to remove, 0 to keep)
+	 * @param int    $noPrices      Flag to determine whether to remove prices (1 to remove, 0 to keep)
+	 *
+	 * @return array The translated meals
+	 */
+	public static function getTranslatedMeals(array $meals, string $language, int $noIngredients = 0, int $noPrices = 0): array
+	{
+		$translatedMeals = [];
+
+		foreach ($meals as $mealTitle) {
+			$meal = MealsModel::findBy('title', $mealTitle);
+
+			if (!$meal) {
+				continue;
+			}
+
+			$mealTranslations = MealsLanguageModel::findBy('pid', $meal->id);
+
+			if ($mealTranslations) {
+				foreach ($mealTranslations as $translation) {
+					if ($translation->language === $language) {
+						$mealInfo = [
+							'title' => $translation->title ?: $meal->title,
+							'ingredients' => $translation->ingredients ?: $meal->ingredients,
+							'price' => $translation->price ?: $meal->price,
+						];
+
+						// Remove ingredients if noIngredients flag is set
+						if ($noIngredients) {
+							$mealInfo['ingredients'] = '';
+						}
+
+						// Remove prices if noPrices flag is set
+						if ($noPrices) {
+							$mealInfo['price'] = '';
+						}
+
+						$translatedMeals[] = $mealInfo;
+					}
+				}
+			} else {
+				$mealInfo = [
+					'title' => $meal->title,
+					'ingredients' => $meal->ingredients,
+					'price' => $meal->price,
+				];
+
+				// Remove ingredients if noIngredients flag is set
+				if ($noIngredients) {
+					$mealInfo['ingredients'] = '';
+				}
+
+				// Remove prices if noPrices flag is set
+				if ($noPrices) {
+					$mealInfo['price'] = '';
+				}
+
+				$translatedMeals[] = $mealInfo;
+			}
+		}
+
+		return $translatedMeals;
+	}
+
 }

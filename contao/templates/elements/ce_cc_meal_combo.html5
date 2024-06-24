@@ -3,11 +3,9 @@
 <?php $this->extend('block_searchable'); ?>
 
 <?php $this->block('content'); ?>
-
-<?php foreach ($this->menu as $category => $meals): ?>
-  <div class="meals">
-    <h2 class="category_headline"><?= $category ?></h2>
-    <?php foreach ($meals as $m): ?>
+<div class="meals">
+  <?php if ($this->menu): ?>
+    <?php foreach ($this->menu as $m): ?>
       <div class="single_meal">
 
         <p class="meal_title"><?= $m['title'] ?></p>
@@ -22,7 +20,6 @@
 
       </div>
     <?php endforeach; ?>
-  </div>
-<?php endforeach; ?>
-
+  <?php endif; ?>
+</div>
 <?php $this->endblock(); ?>

@@ -62,9 +62,7 @@ class ModuleMenuCategories extends Module
      */
     protected function compile()
     {
-
         global $objPage;
-
         $currentLng = $objPage->rootLanguage;
 
         if (!$this->categories_picker) {
@@ -72,96 +70,114 @@ class ModuleMenuCategories extends Module
         }
 
         $selectedCategories = StringUtil::deserialize($this->categories_picker);
-
         $compiledMenu = [];
 
-
-        foreach ($selectedCategories as $v) {
-            $category = MealsCategoryModel::findById($v);
+        foreach ($selectedCategories as $categoryId) {
+            $category = MealsCategoryModel::findById($categoryId);
             $meals = $this->getTranslatedMeals($category->id, $currentLng);
 
             if ($meals) {
-                if ($this->getTranslatedCategories($category->id, $currentLng)) {
-                    $compiledMenu[$this->getTranslatedCategories($category->id, $currentLng)] =  $meals;
-                } else {
-                    $compiledMenu[$category->title] = $meals;
-                }
+                $categoryTitle = $this->getTranslatedCategories($category->id, $currentLng) ?? $category->title;
+                $compiledMenu[$categoryTitle] = $meals;
             }
         }
-
 
         $this->Template->menu = $compiledMenu;
     }
 
-
     /**
-     * Get language specific info
+     * Get translated category title
+     *
+     * @param int    $id  The category ID
+     * @param string $lng The target language
+     *
+     * @return string|null The translated category title or null if not found
      */
-    protected function getTranslatedCategories($id, $lng)
+    protected function getTranslatedCategories(int $id, string $lng): ?string
     {
-
         $categories = MealsCategoryLanguageModel::findBy('pid', $id);
+
         if ($categories) {
-            $langCat = [];
-
-            foreach ($categories as $v) {
-                $langCat[$v->language]  = $v->title;
-            }
-
-            if (array_key_exists($lng, $langCat)) {
-                return $langCat[$lng];
+            foreach ($categories as $category) {
+                if ($category->language === $lng) {
+                    return $category->title;
+                }
             }
         }
 
-        return [];
+        return null;
     }
 
-
     /**
-     * Get language-specific info
+     * Get translated meals for a category
+     *
+     * @param int    $categoryId The category ID
+     * @param string $language   The target language
+     *
+     * @return array The translated meals
      */
-    protected function getTranslatedMeals($pid, $lng)
+    protected function getTranslatedMeals(int $categoryId, string $language): array
     {
-        $meals = MealsModel::findBy("pid", $pid);
+        $meals = MealsModel::findBy("pid", $categoryId);
 
         if (!$meals) {
             return [];
         }
 
-        $langMeals = [];
-        foreach ($meals as $m) {
-            $mealsLngObj = MealsLanguageModel::findBy("pid", $m->id);
-            $added = false;
+        $translatedMeals = [];
 
-            if ($mealsLngObj) {
-                foreach ($mealsLngObj as $val) {
-                    if ($val->language == $lng) {
+        foreach ($meals as $meal) {
+            $mealTranslations = MealsLanguageModel::findBy("pid", $meal->id);
+            $isMealAdded = false;
 
-                        // Fallback if price is not set in language
-                        if (!$val->price) {
-                            $val->price = $m->price;
-                        }
-                        // Language specific
-                        $langMeals[] = [
-                            "title" => $val->title,
-                            "ingredients" => $val->ingredients,
-                            "price" => $val->price,
+            if ($mealTranslations) {
+                foreach ($mealTranslations as $translation) {
+                    if ($translation->language === $language) {
+                        $mealInfo = [
+                            'title' => $translation->title ?: $meal->title,
+                            'ingredients' => $translation->ingredients ?: $meal->ingredients,
+                            'price' => $translation->price ?: $meal->price,
                         ];
-                        $added = true;
+
+                        // Remove ingredients if noingredients flag is set
+                        if ($this->noingredients) {
+                            $mealInfo['ingredients'] = '';
+                        }
+
+                        // Remove prices if noprices flag is set
+                        if ($this->noprices) {
+                            $mealInfo['price'] = '';
+                        }
+
+                        $translatedMeals[] = $mealInfo;
+                        $isMealAdded = true;
                         break; // Stop further checking once the correct language is found
                     }
                 }
             }
 
-            if (!$added) {
-                $langMeals[] = [
-                    "title" => $m->title,
-                    "ingredients" => $m->ingredients,
-                    "price" => $m->price,
+            // Add default meal information if no translation is found
+            if (!$isMealAdded) {
+                $mealInfo = [
+                    'title' => $meal->title,
+                    'ingredients' => $meal->ingredients,
+                    'price' => $meal->price,
                 ];
+
+                // Remove ingredients if noingredients flag is set
+                if ($this->noingredients) {
+                    $mealInfo['ingredients'] = '';
+                }
+
+                // Remove prices if noprices flag is set
+                if ($this->noprices) {
+                    $mealInfo['price'] = '';
+                }
+
+                $translatedMeals[] = $mealInfo;
             }
         }
 
-        return $langMeals;
+        return $translatedMeals;
     }
 }

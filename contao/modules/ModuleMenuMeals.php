@@ -62,7 +62,6 @@ class ModuleMenuMeals extends Module
      */
     protected function compile()
     {
-
         global $objPage;
         $currentLng = $objPage->rootLanguage;
 
@@ -71,51 +70,77 @@ class ModuleMenuMeals extends Module
         }
 
         $selectedMeals = StringUtil::deserialize($this->meals_picker);
-
         $meals = $this->getTranslatedMeals($selectedMeals, $currentLng);
-
 
         $this->Template->menu = $meals;
     }
 
-
-
     /**
-     * Get language specific info
+     * Get language-specific meal information
+     *
+     * @param array  $meals The list of meals to be translated
+     * @param string $lng   The target language
+     *
+     * @return array The translated meals
      */
-    protected function getTranslatedMeals($meals, $lng)
+    protected function getTranslatedMeals(array $meals, string $lng): array
     {
         $langMeals = [];
-        foreach ($meals as $m) {
 
-            $meal = MealsModel::findBy('title', $m);
+        foreach ($meals as $mealTitle) {
+            $meal = MealsModel::findBy('title', $mealTitle);
+
+            if (!$meal) {
+                continue;
+            }
+
             $mealLng = MealsLanguageModel::findBy('pid', $meal->id);
 
             if ($mealLng) {
-                foreach ($mealLng as $v) {
-                    if ($v->language == $lng) {
+                foreach ($mealLng as $translatedMeal) {
+                    if ($translatedMeal->language === $lng) {
+                        $mealInfo = [
+                            'title' => $translatedMeal->title ?: $meal->title,
+                            'ingredients' => $translatedMeal->ingredients ?: $meal->ingredients,
+                            'price' => $translatedMeal->price ?: $meal->price,
+                        ];
 
-                        // Fallback if price is not set in language
-                        if (!$v->price) {
-                            $v->price = $meal->price;
+                        // Remove ingredients if noingredients flag is set
+                        if ($this->noingredients) {
+                            $mealInfo['ingredients'] = '';
                         }
 
-                        $langMeals[] = [
-                            "title" => $v->title,
-                            "ingredients" => $v->ingredients,
-                            "price" => $v->price,
-                        ];
+                        // Remove prices if noprices flag is set
+                        if ($this->noprices) {
+                            $mealInfo['price'] = '';
+                        }
+
+                        $langMeals[] = $mealInfo;
                     }
                 }
             } else {
-                $langMeals[] = [
-                    "title" => $meal->title,
-                    "ingredients" => $meal->ingredients,
-                    "price" => $meal->price,
+                $mealInfo = [
+                    'title' => $meal->title,
+                    'ingredients' => $meal->ingredients,
+                    'price' => $meal->price,
                 ];
+
+                // Remove ingredients if noingredients flag is set
+                if ($this->noingredients) {
+                    $mealInfo['ingredients'] = '';
+                }
+
+                // Remove prices if noprices flag is set
+                if ($this->noprices) {
+                    $mealInfo['price'] = '';
+                }
+
+                $langMeals[] = $mealInfo;
+
             }
         }
 
         return $langMeals;
     }
 }
+

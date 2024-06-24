@@ -10,9 +10,6 @@
  */
 
 
-
-
-
 use FourAngles\ChefBundle\Models\MealsCategoryModel;
 use FourAngles\ChefBundle\Models\MealsCategoryLanguageModel;
 use FourAngles\ChefBundle\Models\MealsLanguageModel;
@@ -27,11 +24,9 @@ $GLOBALS['BE_MOD']['contao_chef']['category'] = array(
 
 // Front end modules
 $GLOBALS['FE_MOD']['cc_menu'] = array(
-	'cc_menu_categories'   => ModuleMenuCategories::class,
+	'cc_menu_categories' => ModuleMenuCategories::class,
 	'cc_menu_meals' => ModuleMenuMeals::class,
 );
-
-
 
 // Models
 $GLOBALS['TL_MODELS']['tl_cc_meals_category'] = MealsCategoryModel::class;
@@ -39,3 +34,6 @@ $GLOBALS['TL_MODELS']['tl_cc_meals_category_lng'] = MealsCategoryLanguageModel::
 
 $GLOBALS['TL_MODELS']['tl_cc_meals'] = MealsModel::class;
 $GLOBALS['TL_MODELS']['tl_cc_meals_lng'] = MealsLanguageModel::class;
+
+// Elements
+$GLOBALS['TL_CTE']['contaochef']['mealcombo'] = 'FourAngles\ChefBundle\Elements\ContentCCMealCombo';

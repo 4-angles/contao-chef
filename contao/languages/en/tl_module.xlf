@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.1">
+  <file datatype="php" original="contao/languages/en/tl_module.php" source-language="en">
+    <body>
+
+
+      <trans-unit id="tl_module.noprices.0">
+        <source>Don't show prices</source>
+      </trans-unit>
+      <trans-unit id="tl_module.noingredients.0">
+        <source>Don't show ingredients</source>
+      </trans-unit>
+      <trans-unit id="tl_module.meals_picker.0">
+        <source>Items</source>
+      </trans-unit>
+      <trans-unit id="tl_module.categories_picker.0">
+        <source>Categories Picker</source>
+      </trans-unit>
+      <trans-unit id="tl_module.info_legend">
+        <source>Informations</source>
+      </trans-unit>
+
+
+    </body>
+  </file>
+</xliff>

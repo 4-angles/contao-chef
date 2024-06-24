@@ -1,22 +1,20 @@
-<?xml version="1.0" ?><xliff version="1.1">
-  <file datatype="php" original="contao/languages/en/tl_module.php" source-language="en" target-language="de">
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.1">
+  <file datatype="php" original="contao/languages/de/tl_module.php" source-language="de">
     <body>
-      <trans-unit id="tl_module.faq_categories.0">
-        <source>FAQ categories</source>
-        <target>FAQ-Kategorien</target>
+
+
+      <trans-unit id="tl_module.noprices.0">
+        <source>Keine Preise anzeigen</source>
       </trans-unit>
-      <trans-unit id="tl_module.faq_categories.1">
-        <source>Please select one or more FAQ categories.</source>
-        <target>Bitte wählen Sie eine oder mehrere FAQ-Kategorien.</target>
+      <trans-unit id="tl_module.noingredients.0">
+        <source>Zutaten nicht anzeigen</source>
       </trans-unit>
-      <trans-unit id="tl_module.faq_readerModule.0">
-        <source>FAQ reader module</source>
-        <target>FAQ-Leser</target>
+      <trans-unit id="tl_module.info_legend">
+        <source>Informationen</source>
       </trans-unit>
-      <trans-unit id="tl_module.faq_readerModule.1">
-        <source>Automatically switch to the FAQ reader if an item has been selected.</source>
-        <target>Automatisch zum FAQ-Leser wechseln, wenn ein Beitrag ausgewählt wurde.</target>
-      </trans-unit>
+
+
     </body>
   </file>
 </xliff>
